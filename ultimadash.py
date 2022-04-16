@@ -164,10 +164,9 @@ line_df["Total Paid"] = weighted_df.loc[starting_date_index - 1:, "Total Paid"]
 total_portfolio = weighted_df["Portfolio"].iloc[-1] + security
 total_amount = weighted_df["Total Paid"].iloc[-1] + security
 profit = round(((total_portfolio / total_amount) - 1) * 100, 2)
-an_profit = round(((np.power(1+(profit/100) , 12/len(date_selection)))-1)*100,2)
 st.title("Ultima")
 st.markdown("##")
-left_c, midle_c, right_c, far_c = st.columns(4)
+left_c, midle_c, right_c= st.columns(3)
 with left_c:
     st.subheader("Αξία Χαρτοφυλακίου:")
     st.subheader(f"{total_portfolio}€")
@@ -177,9 +176,6 @@ with midle_c:
 with right_c:
     st.subheader("Συνολική Απόδοση:")
     st.subheader(f"{profit}%")
-with far_c:
-    st.subheader("Ετησιοποιημένη Απόδοση:")
-    st.subheader(f"{an_profit}%")
 st.markdown("---")
 
 #Main Chart
