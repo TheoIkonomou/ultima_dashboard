@@ -1,8 +1,10 @@
+#Import packages
 import pandas as pd
 import numpy as np
 import streamlit as st
 import plotly.express as px
 
+#Read the data
 df = pd.read_csv('stocks.csv')
 df2 = pd.read_csv('bonds.csv')
 pd.set_option("display.max_rows", None, "display.max_columns", None)
