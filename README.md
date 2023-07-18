@@ -12,4 +12,6 @@ Main KPIs:
 1. Portfolio value
 2. Amount invested
 3. Total return as %
+
+Dashboard screenshot:
 ![Στιγμιότυπο οθόνης (1)](https://user-images.githubusercontent.com/90036187/171159954-eeb2b6ad-48ef-4f59-82cf-87ed8de06cbb.png)
