@@ -4,9 +4,46 @@ import numpy as np
 import streamlit as st
 import plotly.express as px
 
+
+#Fuction for extracting data from the web
+def extract_fund_data(url):
+    
+    #import libraries
+    from bs4 import BeautifulSoup
+    import requests
+    import pandas as pd
+    
+    #Extrack html
+    page=requests.get(url)
+    soup = BeautifulSoup(page.text,"html.parser")
+    
+    #Keep the table
+    table = soup.find("table",{"id": "symbolHistoryAll"})
+    
+    #Extract headers
+    headers = table.find_all("th")
+    headers = [titles.text.strip() for titles in headers]
+
+    #Create Dataframe
+    df = pd.DataFrame(columns=headers)
+
+    #Extract data
+    data = table.find_all("tr")
+    for row in data[1:]:
+        row_data = row.find_all("td")
+        individual_row_data = [data.text.strip() for data in row_data]
+        length=len(df)
+        df.loc[length]=individual_row_data
+
+    #Keep necessary columns
+    df = df[["Trade Date","Close"]]
+    df["Close"] = df["Close"].str.replace(",",".")
+    return df
+
+
 #Read the data
-df = pd.read_csv('stocks.csv')
-df2 = pd.read_csv('bonds.csv')
+stock_df = extract_fund_data("https://www.naftemporiki.gr/amoivaia/?id=NHAMKMT.MTF&tab=history-tab&section=table")
+bond_df = extract_fund_data("https://www.naftemporiki.gr/amoivaia/?id=NHAOKMT.MTF&tab=history-tab&section=table")
 pd.set_option("display.max_rows", None, "display.max_columns", None)
 
 # Formating Dashboard
@@ -15,26 +52,24 @@ st.set_page_config(page_title="Ultima",
                    layout="wide")
 
 # Formating stock file
-df[['Date', 'Price']] = df['Trade Date;Close'].str.split(';', 1, expand=True)
-df.drop("Trade Date;Close", axis=1, inplace=True)
-df = df.astype({'Price': float})
-df['Date'] = pd.to_datetime(df['Date'], format="%d/%m/%Y")
-df['Year'] = pd.to_datetime(df['Date']).dt.year
-df['Month'] = pd.to_datetime(df['Date']).dt.month
-df.drop('Date', axis=1, inplace=True)
+stock_df.columns=['Date', 'Price']
+stock_df = stock_df.astype({'Price': float})
+stock_df['Date'] = pd.to_datetime(stock_df['Date'], format="%d/%m/%Y")
+stock_df['Year'] = pd.to_datetime(stock_df['Date']).dt.year
+stock_df['Month'] = pd.to_datetime(stock_df['Date']).dt.month
+stock_df.drop('Date', axis=1, inplace=True)
 
-stock_prices = pd.DataFrame(df.groupby(by=["Year", 'Month']).mean().round(2).reset_index())
+stock_prices = pd.DataFrame(stock_df.groupby(by=["Year", 'Month']).mean().round(2).reset_index())
 
 # Formating Bonds file
-df2[['Date', 'Price']] = df2['Trade Date;Close'].str.split(';', 1, expand=True)
-df2.drop("Trade Date;Close", axis=1, inplace=True)
-df2 = df2.astype({'Price': float})
-df2['Date'] = pd.to_datetime(df2['Date'], format="%d/%m/%Y")
-df2['Year'] = pd.to_datetime(df2['Date']).dt.year
-df2['Month'] = pd.to_datetime(df2['Date']).dt.month
-df2.drop('Date', axis=1, inplace=True)
+bond_df.columns= ['Date', 'Price']
+bond_df = bond_df.astype({'Price': float})
+bond_df['Date'] = pd.to_datetime(bond_df['Date'], format="%d/%m/%Y")
+bond_df['Year'] = pd.to_datetime(bond_df['Date']).dt.year
+bond_df['Month'] = pd.to_datetime(bond_df['Date']).dt.month
+bond_df.drop('Date', axis=1, inplace=True)
 
-bond_prices = pd.DataFrame(df2.groupby(by=["Year", 'Month']).mean().round(2).reset_index())
+bond_prices = pd.DataFrame(bond_df.groupby(by=["Year", 'Month']).mean().round(2).reset_index())
 
 # List with months and years
 year_months = stock_prices[["Year", "Month"]]
@@ -147,7 +182,7 @@ for i in range(len(weighted_df)):
 
 
 
-# Formating final df for the chart
+# Formating final stock_df for the chart
 
 weighted_df["Portfolio"] = Portfolio
 weighted_df["Total Paid"] = Total_paid
