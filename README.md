@@ -14,5 +14,4 @@ Main KPIs:
 2. Amount invested
 3. Total return as %
 
-Dashboard screenshot:
-![Screenshot 2023-07-19 154218](https://github.com/TheoIkonomou/ultima_dashboard/assets/90036187/d116196e-81b6-4cf5-aa0f-1641c2fc93fd)
+Dashboard URL: https://ultima-nn-dashboard.streamlit.app/
