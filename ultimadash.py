@@ -3,15 +3,11 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 import plotly.express as px
-
+from bs4 import BeautifulSoup
+import requests
 
 #Fuction for extracting data from the web
 def extract_fund_data(url):
-    
-    #import libraries
-    from bs4 import BeautifulSoup
-    import requests
-    import pandas as pd
     
     #Extrack html
     page=requests.get(url)
