@@ -13,10 +13,7 @@ st.set_page_config(page_title="Ultima",
 
 
 #Fuction for extracting data from the web
-<<<<<<< HEAD
-=======
 @st.cache_data(persist="disk")
->>>>>>> ae9a474 (Implement caching for better performance.)
 def extract_fund_data(url):
     
     #Extrack html
