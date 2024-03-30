@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 import requests
 
 #Fuction for extracting data from the web
+@st.cache_data
 def extract_fund_data(url):
     
     #Extrack html
