@@ -45,8 +45,8 @@ def extract_fund_data(url):
 
 
 #Read the data
-stock_df = st.cache_data( extract_fund_data("https://www.naftemporiki.gr/amoivaia/?id=NHAMKMT.MTF&tab=history-tab&section=table"))()
-bond_df = st.cache_data (extract_fund_data("https://www.naftemporiki.gr/amoivaia/?id=NHAOKMT.MTF&tab=history-tab&section=table"))()
+stock_df = extract_fund_data("https://www.naftemporiki.gr/amoivaia/?id=NHAMKMT.MTF&tab=history-tab&section=table")
+bond_df = extract_fund_data("https://www.naftemporiki.gr/amoivaia/?id=NHAOKMT.MTF&tab=history-tab&section=table")
 pd.set_option("display.max_rows", None, "display.max_columns", None)
 
 
