@@ -6,7 +6,17 @@ import plotly.express as px
 from bs4 import BeautifulSoup
 import requests
 
+# Formating Dashboard
+st.set_page_config(page_title="Ultima",
+                   page_icon=":chart_with_upward_trend:",
+                   layout="wide")
+
+
 #Fuction for extracting data from the web
+<<<<<<< HEAD
+=======
+@st.cache_data(persist="disk")
+>>>>>>> ae9a474 (Implement caching for better performance.)
 def extract_fund_data(url):
     
     #Extrack html
@@ -42,10 +52,7 @@ stock_df = st.cache_data( extract_fund_data("https://www.naftemporiki.gr/amoivai
 bond_df = st.cache_data (extract_fund_data("https://www.naftemporiki.gr/amoivaia/?id=NHAOKMT.MTF&tab=history-tab&section=table"))()
 pd.set_option("display.max_rows", None, "display.max_columns", None)
 
-# Formating Dashboard
-st.set_page_config(page_title="Ultima",
-                   page_icon=":chart_with_upward_trend:",
-                   layout="wide")
+
 
 # Formating stock file
 stock_df.columns=['Date', 'Price']
@@ -202,10 +209,10 @@ st.markdown("##")
 left_c, midle_c, right_c= st.columns(3)
 with left_c:
     st.subheader("Αξία Χαρτοφυλακίου:")
-    st.subheader(f"{total_portfolio}€")
+    st.subheader(f"{total_portfolio:,}€")
 with midle_c:
     st.subheader('Συνολικές Καταβολές:')
-    st.subheader(f"{total_amount}€")
+    st.subheader(f"{total_amount:,}€")
 with right_c:
     st.subheader("Συνολική Απόδοση:")
     st.subheader(f"{profit}%")
