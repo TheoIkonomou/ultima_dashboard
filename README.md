@@ -15,3 +15,4 @@ Main KPIs:
 3. Total return as %
 
 Dashboard URL: https://ultima-nn-dashboard.streamlit.app/
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://ultima-nn-dashboard.streamlit.app/)
